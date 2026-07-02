@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>AmperByte Nexus Technologies Limited</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --void:#060c14;--deep:#0a1628;--card:#0d1e35;
+  --cyan:#00d4ff;--cyan2:#00a8cc;--orange:#ff6b00;
+  --white:#eef3f8;--muted:#7a90a8;--border:rgba(0,212,255,.12);
+}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--white);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden;line-height:1.6}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+img{max-width:100%;display:block}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--void)}
+::-webkit-scrollbar-thumb{background:var(--cyan2);border-radius:3px}
+
+/* TYPOGRAPHY HELPERS */
+.display{font-family:'Arial Black','Arial Bold',Gadget,sans-serif;font-weight:900;text-transform:uppercase;line-height:.95;letter-spacing:-.01em}
+.tag{font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);display:inline-flex;align-items:center;gap:.5rem}
+.tag::before{content:'';display:inline-block;width:22px;height:2px;background:var(--cyan)}
+.muted{color:var(--muted)}
+.sec{padding:5.5rem 7%}
+
+/* BUTTONS */
+.bp{display:inline-flex;align-items:center;gap:.5rem;background:var(--cyan);color:#060c14;font-family:'Arial Black',Arial,sans-serif;font-size:.95rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:.8rem 1.8rem;border-radius:4px;border:none;cursor:pointer;transition:background .2s,transform .15s,box-shadow .2s}
+.bp:hover{background:#00bde0;transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,212,255,.25)}
+.bg2{display:inline-flex;align-items:center;gap:.5rem;border:1.5px solid rgba(255,255,255,.2);color:var(--white);font-family:'Arial Black',Arial,sans-serif;font-size:.95rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:.8rem 1.8rem;border-radius:4px;transition:border-color .2s,color .2s,transform .15s;cursor:pointer}
+.bg2:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px)}
+.bw{display:inline-flex;align-items:center;gap:.6rem;background:#25d366;color:#fff;font-family:'Arial Black',Arial,sans-serif;font-size:.95rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:.8rem 1.8rem;border-radius:4px;transition:background .2s,transform .15s}
+.bw:hover{background:#1da851;transform:translateY(-2px)}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:999;display:flex;align-items:center;justify-content:space-between;padding:1rem 7%;background:rgba(6,12,20,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+#nav.sc{padding:.65rem 7%}
+.nb{display:flex;align-items:center;gap:.75rem}
+.nw{font-family:'Arial Black',Arial,sans-serif;font-size:1.2rem;font-weight:900;letter-spacing:.02em}
+.nw span{color:var(--cyan)}
+.nl{display:flex;gap:2rem}
+.nl a{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.nl a:hover,.nl a.act{color:var(--cyan)}
+.na{display:flex;gap:.75rem;align-items:center}
+.nh{display:none;flex-direction:column;gap:5px;padding:4px;cursor:pointer;background:none;border:none}
+.nh span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;transition:.3s}
+
+/* MOBILE NAV */
+#mn{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:998;background:var(--deep);padding:5.5rem 7% 3rem;flex-direction:column}
+#mn.open{display:flex}
+#mn a{display:block;font-family:'Arial Black',Arial,sans-serif;font-size:2rem;font-weight:900;text-transform:uppercase;padding:.65rem 0;border-bottom:1px solid var(--border);color:var(--white);transition:color .2s}
+#mn a:hover{color:var(--cyan)}
+#mn .ma{display:flex;flex-direction:column;gap:.75rem;margin-top:2rem}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding:8rem 7% 5rem;position:relative;overflow:hidden}
+.hgrid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(rgba(0,212,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.04) 1px,transparent 1px);background-size:52px 52px}
+.hglow{position:absolute;right:-5%;top:10%;width:560px;height:560px;background:radial-gradient(circle,rgba(0,212,255,.1) 0%,transparent 65%);pointer-events:none;z-index:0}
+.hglow2{position:absolute;left:-8%;bottom:5%;width:360px;height:360px;background:radial-gradient(circle,rgba(255,107,0,.07) 0%,transparent 65%);pointer-events:none;z-index:0}
+.hsvg{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:min(400px,38vw);opacity:.18;z-index:0;pointer-events:none}
+.hc{position:relative;z-index:1;max-width:740px}
+.heye{margin-bottom:1.6rem}
+.hh1{font-size:clamp(3.4rem,9vw,7rem);margin-bottom:1.4rem}
+.hh1 .ac{color:var(--cyan)}.hh1 .ao{color:var(--orange)}
+.hsub{font-size:1rem;color:var(--muted);max-width:520px;line-height:1.78;margin-bottom:2.4rem}
+.hcta{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:3.5rem}
+.hstat{display:flex;flex-wrap:wrap;gap:3rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.08)}
+.sv{font-family:'Arial Black',Arial,sans-serif;font-size:2.8rem;font-weight:900;color:var(--cyan);line-height:1}
+.sl{font-size:.73rem;color:var(--muted);letter-spacing:.06em;margin-top:.3rem;text-transform:uppercase}
+
+/* Circuit animation */
+@keyframes dl{from{stroke-dashoffset:800}to{stroke-dashoffset:0}}
+.cp{stroke-dasharray:800;stroke-dashoffset:800;animation:dl 2.5s ease .5s forwards}
+
+/* MARQUEE */
+.mwrap{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;padding:.85rem 0}
+.minner{display:flex;gap:3rem;width:max-content;animation:mq 28s linear infinite}
+.minner:hover{animation-play-state:paused}
+.mitem{font-family:'Arial Black',Arial,sans-serif;font-size:.88rem;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.75rem;white-space:nowrap}
+.mitem::before{content:'◆';color:var(--cyan);font-size:.5rem}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SERVICES */
+#services{background:var(--deep)}
+.sh{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.5rem;margin-bottom:3.5rem}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.15rem}
+.scard{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.85rem 1.65rem;position:relative;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s}
+.scard::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--cyan2));transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.scard:hover{transform:translateY(-5px);border-color:rgba(0,212,255,.3);box-shadow:0 16px 48px rgba(0,212,255,.08)}
+.scard:hover::after{transform:scaleX(1)}
+.sico{width:46px;height:46px;background:rgba(0,212,255,.09);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem}
+.sico svg{width:22px;height:22px;stroke:var(--cyan);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sname{font-family:'Arial Black',Arial,sans-serif;font-size:1rem;font-weight:900;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.5rem}
+.sdesc{font-size:.86rem;color:var(--muted);line-height:1.68}
+.gnum{position:absolute;bottom:.4rem;right:1.1rem;font-family:'Arial Black',Arial,sans-serif;font-size:4rem;font-weight:900;color:rgba(0,212,255,.04);line-height:1;pointer-events:none}
+
+/* ABOUT */
+#about{background:var(--void)}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.ametrics{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:2.5rem;display:flex;flex-direction:column;gap:1.5rem}
+.mrow{}
+.minfo{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.5rem}
+.mname{font-size:.79rem;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+.mval{font-family:'Arial Black',Arial,sans-serif;font-size:1.5rem;font-weight:900;color:var(--cyan)}
+.mbar{height:7px;background:rgba(255,255,255,.07);border-radius:100px;overflow:hidden}
+.mfill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--cyan2),var(--cyan));width:0;transition:width 1.3s ease}
+.apts{display:flex;flex-direction:column;gap:1.35rem;margin-top:2rem}
+.apt{display:flex;gap:1rem;align-items:flex-start}
+.adot{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:rgba(0,212,255,.1);display:flex;align-items:center;justify-content:center;margin-top:3px}
+.adot svg{width:11px;height:11px;stroke:var(--cyan);fill:none;stroke-width:2.5}
+.apt strong{display:block;font-size:.95rem;margin-bottom:.2rem}
+.apt p{font-size:.86rem;color:var(--muted);line-height:1.65}
+
+/* PROCESS */
+#process{background:var(--deep)}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:3.5rem}
+.pstep{padding:2.2rem 1.85rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;transition:background .25s}
+.pstep:hover{background:#102240}
+.pstep:nth-child(3n){border-right:none}
+.pstep:nth-child(n+4){border-bottom:none}
+.pnum{font-family:'Arial Black',Arial,sans-serif;font-size:3.5rem;font-weight:900;color:rgba(0,212,255,.07);line-height:1;margin-bottom:.3rem}
+.ptitle{font-family:'Arial Black',Arial,sans-serif;font-size:1rem;font-weight:900;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.55rem}
+.pdesc{font-size:.85rem;color:var(--muted);line-height:1.68}
+.pacc{position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--orange);transition:width .4s}
+.pstep:hover .pacc{width:100%}
+
+/* STACK */
+#stack{background:var(--void);padding:3.5rem 7%}
+.slbl{text-align:center;font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1.8rem;font-weight:700}
+.spills{display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem}
+.pill{background:var(--card);border:1px solid var(--border);border-radius:100px;padding:.42rem 1.1rem;font-size:.82rem;font-weight:600;color:var(--muted);transition:border-color .2s,color .2s;cursor:default}
+.pill:hover{border-color:var(--cyan);color:var(--white)}
+
+/* TESTIMONIALS */
+#testi{background:var(--deep)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.15rem;margin-top:3rem}
+.tcard{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.75rem}
+.tstars{color:var(--cyan);font-size:.85rem;margin-bottom:.9rem;letter-spacing:.1em}
+.ttext{font-size:.9rem;color:var(--muted);line-height:1.72;margin-bottom:1.35rem;font-style:italic}
+.ttext::before{content:'\201C';color:var(--cyan);font-size:1.4rem;font-style:normal;line-height:0;vertical-align:-.35em;margin-right:.15rem}
+.tauth strong{display:block;font-size:.92rem}
+.tauth span{font-size:.78rem;color:var(--muted)}
+
+/* CTA BAND */
+#ctab{background:linear-gradient(135deg,#091422 0%,#0a1f3a 60%,#071018 100%);padding:5rem 7%;text-align:center;position:relative;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+#ctab::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(0,212,255,.09) 0%,transparent 60%)}
+#ctab h2{font-size:clamp(2.4rem,5vw,4.2rem);margin-bottom:1rem;position:relative;z-index:1}
+#ctab p{color:var(--muted);font-size:1rem;max-width:480px;margin:0 auto 2.2rem;position:relative;z-index:1}
+.cbas{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;position:relative;z-index:1}
+
+/* CONTACT */
+#contact{background:var(--void)}
+.cwrap{display:grid;grid-template-columns:1fr 1.4fr;gap:5rem;align-items:start}
+.cinfo{display:flex;flex-direction:column;gap:1.4rem;margin-top:2rem}
+.citem{display:flex;gap:1rem;align-items:flex-start}
+.cico{width:44px;height:44px;flex-shrink:0;background:rgba(0,212,255,.09);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.cico svg{width:20px;height:20px;stroke:var(--cyan);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.citem strong{display:block;font-size:.92rem;margin-bottom:.15rem}
+.citem span{font-size:.85rem;color:var(--muted)}
+.cform{display:flex;flex-direction:column;gap:.9rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.fg{display:flex;flex-direction:column;gap:.35rem}
+.fg label{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.fg input,.fg select,.fg textarea{background:var(--card);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:.72rem 1rem;color:var(--white);font-family:inherit;font-size:.9rem;outline:none;transition:border-color .2s,box-shadow .2s;width:100%}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,.22)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,212,255,.1)}
+.fg textarea{resize:vertical;min-height:110px}
+.fg select option{background:var(--card);color:var(--white)}
+.fsub{align-self:flex-start;background:var(--cyan);color:#060c14;font-family:'Arial Black',Arial,sans-serif;font-size:1rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:.9rem 2.2rem;border-radius:6px;border:none;cursor:pointer;transition:background .2s,transform .15s}
+.fsub:hover{background:#00bde0;transform:translateY(-2px)}
+
+/* TOAST */
+#toast{position:fixed;bottom:2rem;right:2rem;z-index:9999;background:var(--cyan);color:#060c14;font-family:'Arial Black',Arial,sans-serif;font-size:.95rem;font-weight:900;letter-spacing:.06em;padding:.8rem 1.6rem;border-radius:6px;transform:translateY(80px);opacity:0;transition:transform .35s,opacity .35s;pointer-events:none}
+#toast.show{transform:translateY(0);opacity:1}
+
+/* FOOTER */
+footer{background:#040910;padding:3.5rem 7% 2rem;border-top:1px solid var(--border)}
+.ftop{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.fbrand p{font-size:.86rem;color:var(--muted);line-height:1.7;margin-top:.8rem;max-width:260px}
+.fcol h4{font-family:'Arial Black',Arial,sans-serif;font-size:.88rem;font-weight:900;text-transform:uppercase;letter-spacing:.12em;margin-bottom:1rem}
+.fcol li{margin-bottom:.5rem}
+.fcol a{font-size:.85rem;color:var(--muted);transition:color .2s}
+.fcol a:hover{color:var(--cyan)}
+.fbot{border-top:1px solid rgba(255,255,255,.06);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.fbot p{font-size:.8rem;color:var(--muted)}
+.fsoc{display:flex;gap:.6rem}
+.socbtn{width:34px;height:34px;background:var(--card);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--muted);transition:border-color .2s,color .2s}
+.socbtn:hover{border-color:var(--cyan);color:var(--cyan)}
+
+/* WA FLOAT */
+#waf{position:fixed;bottom:1.8rem;left:1.8rem;z-index:997;width:54px;height:54px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);transition:transform .2s}
+#waf:hover{transform:scale(1.1)}
+#waf svg{width:28px;height:28px;fill:#fff}
+
+/* DIVIDERS */
+.divd{height:52px;overflow:hidden;margin-top:-1px}
+.divd svg,.divu svg{display:block;width:100%;height:100%}
+.divu{height:52px;overflow:hidden;margin-bottom:-1px}
+
+/* SCROLL REVEAL */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease}
+.rv.vis{opacity:1;transform:translateY(0)}
+
+/* HERO ANIMATION */
+@keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.hc>*{animation:fu .7s ease both}
+.hc>:nth-child(1){animation-delay:.1s}
+.hc>:nth-child(2){animation-delay:.2s}
+.hc>:nth-child(3){animation-delay:.3s}
+.hc>:nth-child(4){animation-delay:.42s}
+.hc>:nth-child(5){animation-delay:.55s}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .agrid{grid-template-columns:1fr}
+  .ftop{grid-template-columns:1fr 1fr}
+  .pgrid{grid-template-columns:1fr 1fr}
+  .pstep:nth-child(3n){border-right:1px solid var(--border)}
+  .pstep:nth-child(2n){border-right:none}
+  .pstep:nth-child(3),.pstep:nth-child(4){border-bottom:1px solid var(--border)}
+  .pstep:nth-child(n+5){border-bottom:none}
+}
+@media(max-width:768px){
+  .sec{padding:4rem 5%}
+  #nav{padding:.9rem 5%}
+  .nl,.na .bg2{display:none}
+  .nh{display:flex}
+  #hero{padding:7.5rem 5% 4rem}
+  .hstat{gap:1.8rem}
+  .cwrap{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+  .sh{flex-direction:column;align-items:flex-start}
+  .pgrid{grid-template-columns:1fr}
+  .pstep{border-right:none!important;border-bottom:1px solid var(--border)!important}
+  .pstep:last-child{border-bottom:none!important}
+  .hsvg{display:none}
+  .ftop{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  .rv,.hc>*{animation:none;opacity:1;transform:none}
+  .cp{animation:none;stroke-dashoffset:0}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nb">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+      <polygon points="18,2 32,9 32,27 18,34 4,27 4,9" fill="#0a1628" stroke="#00d4ff" stroke-width="1.4"/>
+      <path d="M14 9L20 17L15.5 17L22 28" stroke="#00d4ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="26" cy="12" r="2.2" fill="#ff6b00"/>
+    </svg>
+    <div class="nw">Amper<span>Byte</span> Nexus</div>
+  </a>
+  <ul class="nl">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#testi">Clients</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="na">
+    <a href="#contact" class="bg2" style="padding:.55rem 1.2rem;font-size:.82rem">Get a Quote</a>
+    <button class="nh" id="hbg" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div id="mn">
+  <a href="#services" class="mob">Services</a>
+  <a href="#about" class="mob">About</a>
+  <a href="#process" class="mob">Process</a>
+  <a href="#testi" class="mob">Clients</a>
+  <a href="#contact" class="mob">Contact</a>
+  <div class="ma">
+    <a href="#contact" class="bp">Get a Free Quote</a>
+    <a href="https://wa.me/254700000000" class="bw" target="_blank">WhatsApp Us</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hgrid"></div>
+  <div class="hglow"></div>
+  <div class="hglow2"></div>
+  <!-- Animated circuit board SVG -->
+  <svg class="hsvg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path class="cp" d="M40 200H110V70H250V140H310V70H370" stroke="#00d4ff" stroke-width="1.3"/>
+    <path class="cp" d="M40 230H95V330H175V290H270V350H370" stroke="#00d4ff" stroke-width="1.3" style="animation-delay:.4s"/>
+    <path class="cp" d="M190 200V155H345V245H270" stroke="#00d4ff" stroke-width=".9" style="animation-delay:.8s"/>
+    <circle cx="110" cy="70" r="4.5" fill="#00d4ff" opacity=".8"/>
+    <circle cx="250" cy="70" r="4.5" fill="#00d4ff" opacity=".8"/>
+    <circle cx="310" cy="70" r="4.5" fill="#ff6b00" opacity=".9"/>
+    <circle cx="95" cy="330" r="4.5" fill="#00d4ff" opacity=".8"/>
+    <circle cx="270" cy="350" r="4.5" fill="#ff6b00" opacity=".8"/>
+    <circle cx="345" cy="245" r="5" fill="#00d4ff" opacity=".5"/>
+    <circle cx="190" cy="155" r="3.5" fill="#00d4ff" opacity=".7"/>
+  </svg>
+
+  <div class="hc">
+    <div class="tag heye">Nairobi, Kenya &mdash; Global Reach</div>
+    <h1 class="display hh1">Power Your<br><span class="ac">Digital</span><br><span class="ao">Future</span> Now</h1>
+    <p class="hsub">AmperByte Nexus Technologies Limited builds enterprise-grade IT solutions — cloud infrastructure, custom software, AI integrations, and cybersecurity — engineered for businesses that lead.</p>
+    <div class="hcta">
+      <a href="#services" class="bp">Explore Services</a>
+      <a href="https://wa.me/254700000000?text=Hello%20AmperByte%20Nexus%2C%20I%27d%20like%20to%20discuss%20a%20project." class="bw" target="_blank">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.531 5.858L.057 23.641a.5.5 0 0 0 .615.612l5.938-1.453A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.875 0-3.637-.504-5.158-1.385l-.371-.218-3.822.935.973-3.717-.237-.387A9.775 9.775 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        WhatsApp Us
+      </a>
+      <a href="#contact" class="bg2">Request a Quote</a>
+    </div>
+    <div class="hstat">
+      <div><div class="sv">200+</div><div class="sl">Projects Delivered</div></div>
+      <div><div class="sv">98%</div><div class="sl">Client Satisfaction</div></div>
+      <div><div class="sv">8+</div><div class="sl">Years in Tech</div></div>
+      <div><div class="sv">24/7</div><div class="sl">Support</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mwrap">
+  <div class="minner">
+    <span class="mitem">Web Development</span><span class="mitem">Cloud Solutions</span><span class="mitem">Cybersecurity</span><span class="mitem">Mobile Apps</span><span class="mitem">AI &amp; Machine Learning</span><span class="mitem">Data Analytics</span><span class="mitem">IT Consulting</span><span class="mitem">E-Commerce</span><span class="mitem">IoT Solutions</span><span class="mitem">UI/UX Design</span><span class="mitem">ERP &amp; CRM</span><span class="mitem">Managed IT</span>
+    <span class="mitem">Web Development</span><span class="mitem">Cloud Solutions</span><span class="mitem">Cybersecurity</span><span class="mitem">Mobile Apps</span><span class="mitem">AI &amp; Machine Learning</span><span class="mitem">Data Analytics</span><span class="mitem">IT Consulting</span><span class="mitem">E-Commerce</span><span class="mitem">IoT Solutions</span><span class="mitem">UI/UX Design</span><span class="mitem">ERP &amp; CRM</span><span class="mitem">Managed IT</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services" class="sec" style="background:var(--deep)">
+  <div class="sh rv">
+    <div>
+      <div class="tag">What We Do</div>
+      <h2 class="display" style="font-size:clamp(2.4rem,5vw,3.8rem);margin-top:.5rem">Our Services</h2>
+      <p class="muted" style="margin-top:.6rem;max-width:460px;font-size:.95rem">18 technology disciplines. One reliable partner. Engineered to scale with you.</p>
+    </div>
+    <a href="#contact" class="bg2">Discuss a Project</a>
+  </div>
+  <div class="sgrid">
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><div class="sname">Web Development</div><p class="sdesc">Custom websites and web apps built on React, Next.js, and Laravel — from landing pages to enterprise platforms, with performance and SEO baked in.</p><div class="gnum">01</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="2.5"/></svg></div><div class="sname">Mobile App Development</div><p class="sdesc">iOS and Android apps built in React Native and Flutter — optimised for speed, usability, and App Store success from day one.</p><div class="gnum">02</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><div class="sname">Software Development</div><p class="sdesc">Bespoke enterprise software, ERP systems, CRM tools, and workflow automation engineered precisely to your business logic.</p><div class="gnum">03</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div class="sname">Cloud Solutions</div><p class="sdesc">Architecture, migration, and management across AWS, Azure, and Google Cloud — scalable infrastructure that cuts overhead.</p><div class="gnum">04</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="sname">Cybersecurity</div><p class="sdesc">Penetration testing, threat monitoring, security audits, firewall configuration, and compliance advisory — your data stays locked.</p><div class="gnum">05</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div><div class="sname">AI &amp; Machine Learning</div><p class="sdesc">Custom AI models, NLP, computer vision, and predictive analytics integrated directly into your products and workflows.</p><div class="gnum">06</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div><div class="sname">Data Analytics &amp; BI</div><p class="sdesc">Dashboards, data pipelines, and BI using Power BI, Tableau, and Python — turning raw data into clear, actionable decisions.</p><div class="gnum">07</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div class="sname">Digital Marketing</div><p class="sdesc">SEO, paid ads, content marketing, and social media strategy — full-funnel campaigns that drive measurable, real growth.</p><div class="gnum">08</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg></div><div class="sname">IoT Solutions</div><p class="sdesc">End-to-end IoT — from sensor selection and firmware to cloud connectivity, dashboards, and predictive maintenance alerts.</p><div class="gnum">09</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div><div class="sname">Database Management</div><p class="sdesc">Design, optimisation, migration, and admin of SQL and NoSQL databases — integrity, performance, and high availability guaranteed.</p><div class="gnum">10</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><div class="sname">UI / UX Design</div><p class="sdesc">Research-driven design — wireframes, prototypes, design systems, and usability testing that make complex products intuitive.</p><div class="gnum">11</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="sname">ERP &amp; CRM Systems</div><p class="sdesc">Odoo, SAP, and Salesforce implementation plus bespoke systems that unify your operations end-to-end.</p><div class="gnum">12</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2.5"/></svg></div><div class="sname">E-Commerce Solutions</div><p class="sdesc">Full stores with M-PESA, Stripe, and PayPal integration, inventory management, and logistics — ready to sell from day one.</p><div class="gnum">13</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div class="sname">IT Support &amp; Helpdesk</div><p class="sdesc">Remote and on-site support, device management, network troubleshooting, and SLA-backed helpdesk for any business size.</p><div class="gnum">14</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="sname">IT Consulting</div><p class="sdesc">Digital transformation roadmaps, infrastructure audits, vendor selection, and tech stack recommendations aligned to your goals.</p><div class="gnum">15</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div><div class="sname">Training &amp; Capacity Building</div><p class="sdesc">Structured tech training for corporates and institutions — programming, cybersecurity, data science, and digital literacy.</p><div class="gnum">16</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9" stroke-width="2.5"/><line x1="15" y1="9" x2="15.01" y2="9" stroke-width="2.5"/></svg></div><div class="sname">Domain &amp; Web Hosting</div><p class="sdesc">Domain registration, managed hosting, SSL certificates, and 24/7 site monitoring — reliable uptime, always guaranteed.</p><div class="gnum">17</div></div>
+    <div class="scard rv"><div class="sico"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="sname">Managed IT Services</div><p class="sdesc">Proactive monitoring, patch management, backup and disaster recovery — your fully outsourced IT department, 24/7.</p><div class="gnum">18</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="divd"><svg viewBox="0 0 1440 52" preserveAspectRatio="none"><path d="M0,0L1440,0L1440,52L0,18Z" fill="#060c14"/></svg></div>
+<section id="about" class="sec">
+  <div class="agrid">
+    <div class="rv">
+      <div class="tag">Why AmperByte Nexus</div>
+      <h2 class="display" style="font-size:clamp(2.2rem,5vw,3.8rem);margin:.6rem 0 1rem">Built Different.<br>Wired to Deliver.</h2>
+      <p class="muted" style="margin-bottom:1.8rem;line-height:1.78">We don't just write code — we architect solutions aligned with your business objectives, built to scale with your ambitions. Kenya-first expertise, world-class execution.</p>
+      <div class="apts">
+        <div class="apt"><div class="adot"><svg viewBox="0 0 11 11"><polyline points="2,5.5 4.5,8 9,3"/></svg></div><div><strong>Industry-Certified Engineers</strong><p>Certifications across AWS, Azure, Google Cloud, Cisco, and CompTIA.</p></div></div>
+        <div class="apt"><div class="adot"><svg viewBox="0 0 11 11"><polyline points="2,5.5 4.5,8 9,3"/></svg></div><div><strong>Agile &amp; Transparent Process</strong><p>Sprint demos, real-time tracking, and direct access to your delivery team — always.</p></div></div>
+        <div class="apt"><div class="adot"><svg viewBox="0 0 11 11"><polyline points="2,5.5 4.5,8 9,3"/></svg></div><div><strong>Kenya-First, Global-Ready</strong><p>M-PESA integration expertise and Kenyan data regulation compliance built in.</p></div></div>
+        <div class="apt"><div class="adot"><svg viewBox="0 0 11 11"><polyline points="2,5.5 4.5,8 9,3"/></svg></div><div><strong>Post-Launch Support</strong><p>Warranty period and flexible SLA options on every project — we don't disappear after go-live.</p></div></div>
+      </div>
+    </div>
+    <div class="ametrics rv" id="amm">
+      <div class="mrow"><div class="minfo"><span class="mname">Client Retention Rate</span><span class="mval">94%</span></div><div class="mbar"><div class="mfill" data-w="94"></div></div></div>
+      <div class="mrow"><div class="minfo"><span class="mname">On-Time Delivery</span><span class="mval">91%</span></div><div class="mbar"><div class="mfill" data-w="91"></div></div></div>
+      <div class="mrow"><div class="minfo"><span class="mname">Projects Within Budget</span><span class="mval">97%</span></div><div class="mbar"><div class="mfill" data-w="97"></div></div></div>
+      <div class="mrow"><div class="minfo"><span class="mname">Support Resolution &lt;4h</span><span class="mval">88%</span></div><div class="mbar"><div class="mfill" data-w="88"></div></div></div>
+      <div style="margin-top:1.8rem;padding-top:1.8rem;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;text-align:center">
+        <div><div style="font-family:'Arial Black',Arial,sans-serif;font-size:2.4rem;font-weight:900;color:var(--orange)">200+</div><div class="muted" style="font-size:.75rem;letter-spacing:.06em;text-transform:uppercase">Projects Done</div></div>
+        <div><div style="font-family:'Arial Black',Arial,sans-serif;font-size:2.4rem;font-weight:900;color:var(--orange)">50+</div><div class="muted" style="font-size:.75rem;letter-spacing:.06em;text-transform:uppercase">Enterprise Clients</div></div>
+        <div><div style="font-family:'Arial Black',Arial,sans-serif;font-size:2.4rem;font-weight:900;color:var(--orange)">8+</div><div class="muted" style="font-size:.75rem;letter-spacing:.06em;text-transform:uppercase">Years Active</div></div>
+        <div><div style="font-family:'Arial Black',Arial,sans-serif;font-size:2.4rem;font-weight:900;color:var(--orange)">18</div><div class="muted" style="font-size:.75rem;letter-spacing:.06em;text-transform:uppercase">Service Areas</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<div class="divu"><svg viewBox="0 0 1440 52" preserveAspectRatio="none"><path d="M0,52L0,32L720,0L1440,32L1440,52Z" fill="#0a1628"/></svg></div>
+<section id="process" class="sec" style="background:var(--deep)">
+  <div class="rv">
+    <div class="tag">How We Work</div>
+    <h2 class="display" style="font-size:clamp(2.2rem,5vw,3.8rem);margin:.6rem 0 .6rem">Our Delivery Process</h2>
+    <p class="muted" style="max-width:480px">A structured playbook refined across 200+ projects — you always know what happens next.</p>
+  </div>
+  <div class="pgrid">
+    <div class="pstep rv"><div class="pnum">01</div><div class="ptitle">Discovery</div><p class="pdesc">We deep-dive into your goals, systems, constraints, and success metrics before writing a single line of code.</p><div class="pacc"></div></div>
+    <div class="pstep rv"><div class="pnum">02</div><div class="ptitle">Strategy &amp; Design</div><p class="pdesc">Architecture blueprints, wireframes, tech stack selection, and a full project roadmap delivered for your sign-off.</p><div class="pacc"></div></div>
+    <div class="pstep rv"><div class="pnum">03</div><div class="ptitle">Build &amp; Iterate</div><p class="pdesc">Two-week agile sprints with demos at each milestone. You see real progress, not just status update emails.</p><div class="pacc"></div></div>
+    <div class="pstep rv"><div class="pnum">04</div><div class="ptitle">QA &amp; Security</div><p class="pdesc">Automated testing, manual QA, performance benchmarking, and security scans before anything touches production.</p><div class="pacc"></div></div>
+    <div class="pstep rv"><div class="pnum">05</div><div class="ptitle">Launch</div><p class="pdesc">Zero-downtime deployments with live monitoring, rollback readiness, and a dedicated engineer on standby at go-live.</p><div class="pacc"></div></div>
+    <div class="pstep rv"><div class="pnum">06</div><div class="ptitle">Support &amp; Scale</div><p class="pdesc">Ongoing maintenance, performance tuning, feature expansion, and 24/7 monitoring to keep your system at peak health.</p><div class="pacc"></div></div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section id="stack" style="background:var(--void);padding:3.5rem 7%">
+  <div class="slbl rv">Technologies We Work With</div>
+  <div class="spills rv">
+    <span class="pill">React</span><span class="pill">Next.js</span><span class="pill">Vue.js</span><span class="pill">React Native</span><span class="pill">Flutter</span><span class="pill">Node.js</span><span class="pill">Python</span><span class="pill">Django</span><span class="pill">Laravel</span><span class="pill">AWS</span><span class="pill">Azure</span><span class="pill">Google Cloud</span><span class="pill">Docker</span><span class="pill">Kubernetes</span><span class="pill">PostgreSQL</span><span class="pill">MongoDB</span><span class="pill">Redis</span><span class="pill">TensorFlow</span><span class="pill">Power BI</span><span class="pill">Tableau</span><span class="pill">Salesforce</span><span class="pill">Odoo</span><span class="pill">M-PESA API</span><span class="pill">Stripe</span><span class="pill">WordPress</span><span class="pill">Figma</span><span class="pill">GitHub Actions</span>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testi" class="sec" style="background:var(--deep)">
+  <div class="rv"><div class="tag">Client Stories</div><h2 class="display" style="font-size:clamp(2.2rem,5vw,3.8rem);margin:.6rem 0 .4rem">What Our Clients Say</h2></div>
+  <div class="tgrid">
+    <div class="tcard rv"><div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="ttext">AmperByte delivered our e-commerce platform in 6 weeks, complete with M-PESA integration. Sales jumped 40% in the first quarter after launch.</p><div class="tauth"><strong>James Mwangi</strong><span>CEO, RetailConnect Kenya</span></div></div>
+    <div class="tcard rv"><div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="ttext">Their cybersecurity audit uncovered three critical vulnerabilities our previous vendor missed. The fix-and-monitor package gives us genuine peace of mind.</p><div class="tauth"><strong>Amina Osei</strong><span>IT Director, Apex Financial Services</span></div></div>
+    <div class="tcard rv"><div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="ttext">We migrated our entire ERP to the cloud with AmperByte managing the process. Zero downtime, on budget, and the team was responsive throughout.</p><div class="tauth"><strong>Daniel Kariuki</strong><span>Operations Manager, Savannah Logistics</span></div></div>
+    <div class="tcard rv"><div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="ttext">The mobile app they built has 10,000+ active users and a 4.8-star Play Store rating. Clean code, great UX, they handled App Store submission too.</p><div class="tauth"><strong>Priya Sharma</strong><span>Product Lead, Nairobi FinTech Hub</span></div></div>
+    <div class="tcard rv"><div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="ttext">AmperByte trained our 80-person IT team on cloud security. Sessions were practical and well-structured — the team handles incidents much more confidently now.</p><div class="tauth"><strong>Grace Wanjiku</strong><span>Head of IT, Equity Holdings Group</span></div></div>
+    <div class="tcard rv"><div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="ttext">Their managed IT service saved us the cost of two full-time engineers. Response times are fast and we've had zero critical outages in 18 months.</p><div class="tauth"><strong>Victor Otieno</strong><span>CFO, Serengeti Logistics Ltd</span></div></div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section id="ctab">
+  <div class="tag" style="justify-content:center;margin-bottom:1.2rem">Ready to Start?</div>
+  <h2 class="display" style="font-size:clamp(2.4rem,5vw,4.2rem)">Let's Build Something<br><span style="color:var(--cyan)">Remarkable</span></h2>
+  <p>Tell us about your project — we respond with a tailored proposal within one business day.</p>
+  <div class="cbas">
+    <a href="#contact" class="bp">Get a Free Quote</a>
+    <a href="https://wa.me/254700000000?text=Hello%20AmperByte%20Nexus%2C%20I%27d%20like%20to%20discuss%20a%20project." class="bw" target="_blank">Chat on WhatsApp</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec">
+  <div class="cwrap">
+    <div class="rv">
+      <div class="tag">Get In Touch</div>
+      <h2 class="display" style="font-size:clamp(2rem,4vw,3.2rem);margin:.6rem 0 .8rem">Talk to Our Team</h2>
+      <p class="muted" style="line-height:1.78;max-width:400px">Whether you have a full brief or just an idea — we'll help you figure out the right solution and what it'll take to build it.</p>
+      <div class="cinfo">
+        <div class="citem"><div class="cico"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><strong>Office</strong><span>Westlands, Nairobi, Kenya</span></div></div>
+        <div class="citem"><div class="cico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6.29 6.29l1.56-1.56a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><strong>Phone &amp; WhatsApp</strong><span>+254 700 000 000</span></div></div>
+        <div class="citem"><div class="cico"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><strong>Email</strong><span>hello@amperbytenexus.co.ke</span></div></div>
+        <div class="citem"><div class="cico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><strong>Business Hours</strong><span>Mon–Fri: 8am–6pm EAT &nbsp;|&nbsp; 24/7 Support Available</span></div></div>
+      </div>
+    </div>
+    <form class="cform rv" onsubmit="doSub(event)">
+      <div class="frow">
+        <div class="fg"><label>First Name</label><input type="text" placeholder="John" required/></div>
+        <div class="fg"><label>Last Name</label><input type="text" placeholder="Doe" required/></div>
+      </div>
+      <div class="fg"><label>Email Address</label><input type="email" placeholder="john@company.com" required/></div>
+      <div class="fg"><label>Phone / WhatsApp</label><input type="tel" placeholder="+254 7XX XXX XXX"/></div>
+      <div class="fg"><label>Service Interested In</label>
+        <select>
+          <option value="">Select a service…</option>
+          <option>Web Development</option><option>Mobile App Development</option><option>Software Development</option><option>Cloud Solutions</option><option>Cybersecurity</option><option>AI &amp; Machine Learning</option><option>Data Analytics &amp; BI</option><option>Digital Marketing</option><option>IoT Solutions</option><option>Database Management</option><option>UI / UX Design</option><option>ERP &amp; CRM Systems</option><option>E-Commerce Solutions</option><option>IT Support &amp; Helpdesk</option><option>IT Consulting</option><option>Training &amp; Capacity Building</option><option>Domain &amp; Web Hosting</option><option>Managed IT Services</option><option>Other</option>
+        </select>
+      </div>
+      <div class="fg"><label>Budget Range (KES)</label>
+        <select><option value="">Select a range…</option><option>Under KES 50,000</option><option>KES 50,000 – 200,000</option><option>KES 200,000 – 500,000</option><option>KES 500,000 – 1,000,000</option><option>Over KES 1,000,000</option><option>To be discussed</option></select>
+      </div>
+      <div class="fg"><label>Project Brief</label><textarea placeholder="Tell us what you're building, your timeline, and any specific requirements…"></textarea></div>
+      <button type="submit" class="fsub">Send Message &#8594;</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ftop">
+    <div class="fbrand">
+      <div style="display:flex;align-items:center;gap:.7rem">
+        <svg width="32" height="32" viewBox="0 0 36 36" fill="none"><polygon points="18,2 32,9 32,27 18,34 4,27 4,9" fill="#0a1628" stroke="#00d4ff" stroke-width="1.4"/><path d="M14 9L20 17L15.5 17L22 28" stroke="#00d4ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="26" cy="12" r="2.2" fill="#ff6b00"/></svg>
+        <span style="font-family:'Arial Black',Arial,sans-serif;font-size:1.1rem;font-weight:900">Amper<span style="color:var(--cyan)">Byte</span> Nexus</span>
+      </div>
+      <p>Powering digital transformation for businesses across Kenya and beyond — one engineered solution at a time.</p>
+    </div>
+    <div class="fcol"><h4>Services</h4><ul><li><a href="#services">Web &amp; Mobile Dev</a></li><li><a href="#services">Cloud Solutions</a></li><li><a href="#services">Cybersecurity</a></li><li><a href="#services">AI &amp; Data Analytics</a></li><li><a href="#services">Digital Marketing</a></li><li><a href="#services">Managed IT</a></li></ul></div>
+    <div class="fcol"><h4>Company</h4><ul><li><a href="#about">About Us</a></li><li><a href="#process">How We Work</a></li><li><a href="#testi">Clients</a></li><li><a href="#contact">Careers</a></li><li><a href="#contact">Contact</a></li></ul></div>
+    <div class="fcol"><h4>Legal</h4><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">Cookie Policy</a></li></ul><h4 style="margin-top:1.5rem">Contact</h4><ul><li><a href="mailto:hello@amperbytenexus.co.ke">hello@amperbytenexus.co.ke</a></li><li><a href="tel:+254700000000">+254 700 000 000</a></li></ul></div>
+  </div>
+  <div class="fbot">
+    <p>&#169; 2025 AmperByte Nexus Technologies Limited. All rights reserved.</p>
+    <div class="fsoc">
+      <a href="#" class="socbtn">in</a>
+      <a href="#" class="socbtn">X</a>
+      <a href="#" class="socbtn">f</a>
+      <a href="#" class="socbtn">ig</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WA FLOAT -->
+<a id="waf" href="https://wa.me/254700000000?text=Hello%20AmperByte%20Nexus%2C%20I%27d%20like%20to%20discuss%20a%20project." target="_blank" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.531 5.858L.057 23.641a.5.5 0 0 0 .615.612l5.938-1.453A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.875 0-3.637-.504-5.158-1.385l-.371-.218-3.822.935.973-3.717-.237-.387A9.775 9.775 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+</a>
+
+<div id="toast">&#10003; Message sent! We'll reply within 24 hours.</div>
+
+<script>
+// Nav scroll
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',function(){
+  nav.classList.toggle('sc',window.scrollY>60);
+  document.querySelectorAll('.nl a').forEach(function(a){
+    var s=document.querySelector(a.getAttribute('href'));
+    if(s){var r=s.getBoundingClientRect();a.classList.toggle('act',r.top<=80&&r.bottom>80)}
+  });
+});
+
+// Hamburger
+var hbg=document.getElementById('hbg'),mn=document.getElementById('mn');
+hbg.addEventListener('click',function(){
+  var o=mn.classList.toggle('open');
+  hbg.children[0].style.transform=o?'translateY(7px) rotate(45deg)':'';
+  hbg.children[1].style.opacity=o?'0':'1';
+  hbg.children[2].style.transform=o?'translateY(-7px) rotate(-45deg)':'';
+});
+document.querySelectorAll('.mob').forEach(function(l){
+  l.addEventListener('click',function(){
+    mn.classList.remove('open');
+    hbg.children[0].style.transform='';
+    hbg.children[1].style.opacity='1';
+    hbg.children[2].style.transform='';
+  });
+});
+
+// Scroll reveal
+var ro=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');ro.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el){ro.observe(el)});
+
+// Metric bars
+var mo=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.mfill').forEach(function(b){
+        var w=b.getAttribute('data-w');
+        b.style.width='0';
+        setTimeout(function(){b.style.width=w+'%'},150);
+      });
+      mo.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+var amm=document.getElementById('amm');
+if(amm)mo.observe(amm);
+
+// Form
+function doSub(e){
+  e.preventDefault();
+  var t=document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},4000);
+  e.target.reset();
+}
+</script>
+</body>
+</html>
